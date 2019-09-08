@@ -11,9 +11,13 @@ import UIKit
 import SDWebImage
 
 class ViewController: UIViewController {
-
+    @IBOutlet weak var picsCollection: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("TEST")
+        
         // Do any additional setup after loading the view.
     }
 
