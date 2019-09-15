@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Pxr-zq-5qS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yDs-fT-sZf">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,12 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ehb-rO-G1l">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="an7-F1-AFK">
-                                <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zEJ-TW-D0h">
                                     <size key="itemSize" width="200" height="200"/>
@@ -320,22 +316,37 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="an7-F1-AFK" firstAttribute="top" secondItem="ehb-rO-G1l" secondAttribute="bottom" id="2CP-AZ-I6w"/>
-                            <constraint firstItem="ehb-rO-G1l" firstAttribute="leading" secondItem="Bn4-Z2-xJg" secondAttribute="leading" id="4b1-uz-AsU"/>
-                            <constraint firstItem="ehb-rO-G1l" firstAttribute="top" secondItem="Bn4-Z2-xJg" secondAttribute="top" id="5uY-M8-JHz"/>
+                            <constraint firstItem="an7-F1-AFK" firstAttribute="top" secondItem="Bn4-Z2-xJg" secondAttribute="top" constant="56" id="R9q-qQ-C20"/>
                             <constraint firstItem="an7-F1-AFK" firstAttribute="leading" secondItem="Bn4-Z2-xJg" secondAttribute="leading" id="Yds-u8-HF0"/>
                             <constraint firstItem="Bn4-Z2-xJg" firstAttribute="trailing" secondItem="an7-F1-AFK" secondAttribute="trailing" id="eF3-OM-Iir"/>
-                            <constraint firstItem="ehb-rO-G1l" firstAttribute="trailing" secondItem="Bn4-Z2-xJg" secondAttribute="trailing" id="qdJ-kD-ABp"/>
                             <constraint firstItem="Bn4-Z2-xJg" firstAttribute="bottom" secondItem="an7-F1-AFK" secondAttribute="bottom" id="sHE-Cj-SSJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bn4-Z2-xJg"/>
                     </view>
+                    <navigationItem key="navigationItem" id="1lV-YC-Jpu"/>
                     <connections>
                         <outlet property="picsCollection" destination="an7-F1-AFK" id="dKp-S6-gdv"/>
-                        <outlet property="searchBar" destination="ehb-rO-G1l" id="yfT-XC-zPd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s6A-76-Uh5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063.768115942029" y="109.82142857142857"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PZe-oY-pg2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yDs-fT-sZf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9xp-Ky-zct">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Pxr-zq-5qS" kind="relationship" relationship="rootViewController" id="qqo-3X-Wte"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RgQ-mi-q5K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="153.62318840579712" y="109.82142857142857"/>
         </scene>

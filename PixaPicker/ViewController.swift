@@ -7,16 +7,26 @@
 //
 
 import UIKit
-
 import SDWebImage
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
+    
     @IBOutlet weak var picsCollection: UICollectionView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TEST")
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Image Search"
+        navigationItem.searchController = searchController
+        searchController.searchBar.sizeToFit()
+        
         
         // Do any additional setup after loading the view.
     }
