@@ -7,20 +7,33 @@
 //
 
 import UIKit
-
 import SDWebImage
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
+    
     @IBOutlet weak var picsCollection: UICollectionView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        print(URLExtensions.pixabaySearchURL(withtext: searchText)) //FOR TESTING ONLY
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TEST")
-        
+        setupSearchController()
         // Do any additional setup after loading the view.
     }
 
+    private func setupSearchController(){
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Image Search"
+        navigationItem.searchController = searchController
+        searchController.searchBar.sizeToFit()
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
 
 }
 
