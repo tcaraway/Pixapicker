@@ -11,20 +11,20 @@ import SDWebImage
 
 class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
-    let apiKey = "key=13683470-874d69ddffa828cbb82551e32" //API key for my Pixabay account
     @IBOutlet weak var picsCollection: UICollectionView!
     
     func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text!
-        let searchTextWithoutSpaces = searchText.replacingOccurrences(of: " ", with: "+")
-        let urlWithAPI = "https://pixabay.com/api/?" + apiKey
-        let urlWithSeachText = urlWithAPI + "&q=" + searchTextWithoutSpaces
-        let finalURL = urlWithSeachText + "&image_type=photo"
-        print(finalURL) //FOR TESTING ONLY
+        guard let searchText = searchController.searchBar.text else { return }
+        print(URLExtensions.pixabaySearchURL(withtext: searchText)) //FOR TESTING ONLY
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchController()
+        // Do any additional setup after loading the view.
+    }
+
+    private func setupSearchController(){
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -33,11 +33,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         navigationItem.searchController = searchController
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        
-        // Do any additional setup after loading the view.
     }
-
 
 }
 
