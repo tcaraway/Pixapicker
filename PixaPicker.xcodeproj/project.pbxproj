@@ -14,6 +14,7 @@
 		A1861F5123120883009A575C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1861F5023120883009A575C /* Assets.xcassets */; };
 		A1861F5423120883009A575C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1861F5223120883009A575C /* LaunchScreen.storyboard */; };
 		A1ACA0D8233AA6D000FA0E5C /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */; };
+		A1F156D6233D5679007EBA2C /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F156D5233D5679007EBA2C /* JSONHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		A1861F5323120883009A575C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1861F5523120883009A575C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
+		A1F156D5233D5679007EBA2C /* JSONHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				A1861F492312087E009A575C /* AppDelegate.swift */,
 				A1861F4B2312087E009A575C /* ViewController.swift */,
+				A1F156D5233D5679007EBA2C /* JSONHandler.swift */,
 				A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */,
 				A1861F4D2312087E009A575C /* Main.storyboard */,
 				A1861F5023120883009A575C /* Assets.xcassets */,
@@ -206,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1F156D6233D5679007EBA2C /* JSONHandler.swift in Sources */,
 				A1861F4C2312087E009A575C /* ViewController.swift in Sources */,
 				A1ACA0D8233AA6D000FA0E5C /* URLExtensions.swift in Sources */,
 				A1861F4A2312087E009A575C /* AppDelegate.swift in Sources */,
