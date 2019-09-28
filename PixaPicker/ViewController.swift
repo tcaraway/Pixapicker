@@ -15,7 +15,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        print(URLExtensions.pixabaySearchURL(withtext: searchText)) //FOR TESTING ONLY
+        PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText))
     }
     
     override func viewDidLoad() {
@@ -34,6 +34,8 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
+    
 
 }
 
