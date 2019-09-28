@@ -15,7 +15,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        JSONHandler.handleJSONRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText))
+        PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText))
     }
     
     override func viewDidLoad() {

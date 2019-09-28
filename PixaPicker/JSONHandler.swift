@@ -8,9 +8,9 @@
 
 import Foundation
 
-class JSONHandler {
+class PixaBayAPIService {
     
-    struct Root : Decodable {
+    struct PixaBayResponse : Decodable {
         let totalHits : Int
         let hits : [Hit]
     }
@@ -19,13 +19,13 @@ class JSONHandler {
         let webformatURL : URL
     }
     
-    public static func handleJSONRequest(withURL: String){
+    public static func loadPixaBayRequest(withURL: String){
         guard let url = URL(string : withURL) else { return }
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url) { data, response, error in
             guard let data = data else { print(error!); return }
             do {
-                let result = try JSONDecoder().decode(Root.self, from: data)
+                let result = try JSONDecoder().decode(PixaBayResponse.self, from: data)
                 let hits = result.hits
                 for hit in hits {
                     print(hit.webformatURL) //FOR TESTING
