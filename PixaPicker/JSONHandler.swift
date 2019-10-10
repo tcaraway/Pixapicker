@@ -19,7 +19,8 @@ class PixaBayAPIService {
         let webformatURL : URL
     }
     
-    public static func loadPixaBayRequest(withURL: String){
+    public static func loadPixaBayRequest(withURL: String, completion: @escaping ([URL]) -> Void) {
+        var imageURLArray = [URL]()
         guard let url = URL(string : withURL) else { return }
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url) { data, response, error in
@@ -27,14 +28,21 @@ class PixaBayAPIService {
             do {
                 let result = try JSONDecoder().decode(PixaBayResponse.self, from: data)
                 let hits = result.hits
-                for hit in hits {
-                    print(hit.webformatURL) //FOR TESTING
+                for hit in hits{
+                    imageURLArray.append(hit.webformatURL)
+                }
+                DispatchQueue.main.async {
+                    completion(imageURLArray)
                 }
             } catch {
+                DispatchQueue.main.async {
+                    completion([])
+                }
                 print(error)
             }
         }
         dataTask.resume()
     }
+    
     
 }

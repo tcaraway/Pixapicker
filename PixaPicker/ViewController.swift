@@ -15,7 +15,9 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText))
+        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText), completion: {
+            self.setCellImages(withURLs: $0)
+        }))
     }
     
     override func viewDidLoad() {
@@ -35,7 +37,22 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    private func setCellImages(withURLs: [URL]){
+        var urlArrayIndex = 0
+        for cell in picsCollection.visibleCells{
+            if urlArrayIndex == 20{
+                urlArrayIndex = 0;
+            }
+            let imageView = UIImageView()
+            imageView.sd_setImage(with: withURLs[urlArrayIndex], placeholderImage: nil)
+            cell.addSubview(imageView)
+            urlArrayIndex = urlArrayIndex + 1
+            print("Test")
+        }
+    }
+    
     
 
+    
 }
 

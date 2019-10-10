@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="hcT-kc-59O">
             <objects>
-                <viewController id="Pxr-zq-5qS" customClass="ViewController" customModule="PixaPicker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController definesPresentationContext="YES" id="Pxr-zq-5qS" customClass="ViewController" customModule="PixaPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ONS-Gf-ArC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
