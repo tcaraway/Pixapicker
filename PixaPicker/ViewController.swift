@@ -9,12 +9,33 @@
 import UIKit
 import SDWebImage
 
-class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate{
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     let reuseID = "cell"
     var cellImageURLs = [URL]()
+    
+    
+    //UICollectionViewDelegateFlowLayout protocol functions
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width - 20, height: 240)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
     
     //UICollectionView protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -39,10 +60,10 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         }))
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        // Do any additional setup after loading the view.
     }
 
     private func setupSearchController(){
@@ -55,8 +76,6 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-    //TODO: RESIZE IMAGES TO FIT WIDTH
-    
     }
     
     
