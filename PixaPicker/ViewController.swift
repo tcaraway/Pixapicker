@@ -52,6 +52,27 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         return imageCell
     }
     
+    
+    //UICollectionViewDelegate protocol functions
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCell = imageCollectionView.cellForItem(at: indexPath) as? PixaCollectionViewCell
+        guard let image = selectedCell?.cellImage.image else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer){
+        if let error = error {
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "The image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText), completion: {
@@ -59,7 +80,6 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
             self.imageCollectionView.reloadData()
         }))
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
