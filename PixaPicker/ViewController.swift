@@ -6,6 +6,8 @@
 //  Copyright © 2019 Thomas Caraway. All rights reserved.
 //
 
+//
+
 import UIKit
 import SDWebImage
 
@@ -15,6 +17,8 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     let reuseID = "cell"
     var cellImageURLs = [URL]()
+    var currentPageNumber = 1 //dataCoordinator
+    var currentSearchText = ""
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -46,9 +50,25 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
+        //dataCoordinator.getCellImage (index) -> URL
+            // if (index % 18 -2 )== 0
+                //then getNextPage() (will need delegation or callback)
+                    //delegate.didGetNextPage([URL])
+                        //cellImageURLs.append(urls)
+                        //collectionView.reloadData()
+        
+        if ((((indexPath.row % (currentPageNumber * 20)) - 2) == 0) && (cellImageURLs.count <= (currentPageNumber * 20))) {
+            currentPageNumber = currentPageNumber + 1
+            (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: currentSearchText, withPageNumber: currentPageNumber), completion: {
+                self.cellImageURLs.append(contentsOf: $0)
+                self.imageCollectionView.reloadData()
+            }))
+        }
+        
         if indexPath.row < cellImageURLs.count {
             imageCell.cellImage.sd_setImage(with: cellImageURLs[indexPath.item], placeholderImage: nil)
         }
+        
         return imageCell
     }
     
@@ -75,7 +95,9 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText), completion: {
+        currentSearchText = searchText
+        currentPageNumber = 1
+        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText, withPageNumber: currentPageNumber), completion: {
             self.cellImageURLs = $0
             self.imageCollectionView.reloadData()
         }))

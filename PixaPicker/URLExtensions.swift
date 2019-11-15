@@ -10,7 +10,7 @@ import Foundation
 
 class URLExtensions {
     
-    static func pixabaySearchURL(withtext: String) -> String{
+    static func pixabaySearchURL(withtext: String, withPageNumber: Int) -> String{
         
         let apiKey = "13683470-874d69ddffa828cbb82551e32" //API key for my Pixabay account
         var urlComponents = URLComponents()
@@ -20,7 +20,8 @@ class URLExtensions {
         urlComponents.queryItems = [
             URLQueryItem(name: "key", value: apiKey),
             URLQueryItem(name: "q", value: withtext),
-            URLQueryItem(name: "image_type", value: "photo")
+            URLQueryItem(name: "image_type", value: "photo"),
+            URLQueryItem(name: "page", value: String(withPageNumber))
         ]
         guard let finalURL = urlComponents.url?.absoluteString else { return ""}
         return finalURL
