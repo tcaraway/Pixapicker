@@ -19,6 +19,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     var cellImageURLs = [URL]()
     var currentPageNumber = 1 //dataCoordinator
     var currentSearchText = ""
+    let maxItemsPerPage = 20
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -57,9 +58,9 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
                         //cellImageURLs.append(urls)
                         //collectionView.reloadData()
         
-        if ((((indexPath.row % (currentPageNumber * 20)) - 2) == 0) && (cellImageURLs.count <= (currentPageNumber * 20))) {
-            currentPageNumber = currentPageNumber + 1
-            (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: currentSearchText, withPageNumber: currentPageNumber), completion: {
+        if ((((indexPath.row % (currentPageNumber * maxItemsPerPage)) - 2) == 0) && (cellImageURLs.count <= (currentPageNumber * maxItemsPerPage))) {
+            currentPageNumber += 1
+            (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: currentSearchText, with: currentPageNumber), completion: {
                 self.cellImageURLs.append(contentsOf: $0)
                 self.imageCollectionView.reloadData()
             }))
@@ -97,7 +98,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         guard let searchText = searchController.searchBar.text else { return }
         currentSearchText = searchText
         currentPageNumber = 1
-        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(withtext: searchText, withPageNumber: currentPageNumber), completion: {
+        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: searchText, with: currentPageNumber), completion: {
             self.cellImageURLs = $0
             self.imageCollectionView.reloadData()
         }))
