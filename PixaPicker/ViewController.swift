@@ -11,15 +11,14 @@
 import UIKit
 import SDWebImage
 
-class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate{
     
+
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     let reuseID = "cell"
-    var cellImageURLs = [URL]()
-    var currentPageNumber = 1 //dataCoordinator
     var currentSearchText = ""
-    let maxItemsPerPage = 20
+    var dataCoordinator:PixaDataCoordinator?
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -42,34 +41,36 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     }
     
     
-    //UICollectionView protocol functions
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellImageURLs.count
+    //PixaDataCoordinatorDelegate protocol functions
+    func didGetNextPage(_ sender: PixaDataCoordinator, urls: [URL]) {
+        self.dataCoordinator?.cellImageURLs.append(contentsOf: urls)
+        self.imageCollectionView.reloadData()
     }
     
+    func didUpdateSearchResults(){
+        self.imageCollectionView.reloadData()
+    }
+    
+    
+    //UICollectionView protocol functions
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataCoordinator?.cellImageURLs.count ?? 0
+    }
+    
+    //where populating of images into cells occurs
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
-        //dataCoordinator.getCellImage (index) -> URL
-            // if (index % 18 -2 )== 0
-                //then getNextPage() (will need delegation or callback)
-                    //delegate.didGetNextPage([URL])
-                        //cellImageURLs.append(urls)
-                        //collectionView.reloadData()
-        
-        if ((((indexPath.row % (currentPageNumber * maxItemsPerPage)) - 2) == 0) && (cellImageURLs.count <= (currentPageNumber * maxItemsPerPage))) {
-            currentPageNumber += 1
-            (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: currentSearchText, with: currentPageNumber), completion: {
-                self.cellImageURLs.append(contentsOf: $0)
-                self.imageCollectionView.reloadData()
-            }))
+        //Loads a bunch of images for "infinite" scrolling.
+        //TODO: This is probably not the correct logic. Revisit later
+        if (self.shouldGetNextPage(withIndexRow: indexPath.row)) {
+            dataCoordinator?.getNextPage(withCurrentSearchText: currentSearchText)
         }
-        
-        if indexPath.row < cellImageURLs.count {
-            imageCell.cellImage.sd_setImage(with: cellImageURLs[indexPath.item], placeholderImage: nil)
+        guard let cellImageURLCount = dataCoordinator?.cellImageURLs.count else { return imageCell }
+        if indexPath.row < cellImageURLCount {
+            imageCell.cellImage.sd_setImage(with: dataCoordinator?.cellImageURLs[indexPath.item], placeholderImage: nil)
         }
-        
         return imageCell
     }
     
@@ -81,7 +82,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
-    
+    //Saving tapped photos to album
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer){
         if let error = error {
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
@@ -96,17 +97,15 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        currentSearchText = searchText
-        currentPageNumber = 1
-        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: searchText, with: currentPageNumber), completion: {
-            self.cellImageURLs = $0
-            self.imageCollectionView.reloadData()
-        }))
+        self.currentSearchText = searchText
+        dataCoordinator?.updateSearchResults(with: currentSearchText)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataCoordinator = PixaDataCoordinator()
         setupSearchController()
+        self.dataCoordinator?.delegate = self
     }
 
     private func setupSearchController(){
@@ -119,10 +118,16 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
+    private func shouldGetNextPage(withIndexRow: Int) -> Bool{
+        guard let currentPageNumber = dataCoordinator?.currentPageNumber else { return false }
+        guard let maxImagesPerPage = dataCoordinator?.maxImagesPerPage else { return false }
+        let indexRowToAddRemainder = withIndexRow % ((currentPageNumber * maxImagesPerPage) - 2)
+        let conditionOne = (indexRowToAddRemainder == 0)
+        
+        guard let currentImageAmount = dataCoordinator?.cellImageURLs.count else { return false }
+        let conditionTwo = (currentImageAmount <= (currentPageNumber * maxImagesPerPage))
+        
+        return (conditionOne && conditionTwo)
     }
-    
-    
-
-    
-
-
+    }

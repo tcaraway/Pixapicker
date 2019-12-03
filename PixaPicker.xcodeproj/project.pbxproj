@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		284396233164B6E9870BE5A7 /* Pods_PixaPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743F38483AF9A9D1C0550816 /* Pods_PixaPicker.framework */; };
+		A135363D23887657003A39CB /* PixaDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135363C23887657003A39CB /* PixaDataCoordinator.swift */; };
+		A135363F23887850003A39CB /* PixaDataCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */; };
 		A1861F4A2312087E009A575C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1861F492312087E009A575C /* AppDelegate.swift */; };
 		A1861F4C2312087E009A575C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1861F4B2312087E009A575C /* ViewController.swift */; };
 		A1861F4F2312087E009A575C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1861F4D2312087E009A575C /* Main.storyboard */; };
@@ -22,6 +24,8 @@
 		124C9C2BCA0E4642A4333DEC /* Pods-PixaPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixaPicker.debug.xcconfig"; path = "Target Support Files/Pods-PixaPicker/Pods-PixaPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		743F38483AF9A9D1C0550816 /* Pods_PixaPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PixaPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95A3157464F7112206AF6962 /* Pods-PixaPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixaPicker.release.xcconfig"; path = "Target Support Files/Pods-PixaPicker/Pods-PixaPicker.release.xcconfig"; sourceTree = "<group>"; };
+		A135363C23887657003A39CB /* PixaDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaDataCoordinator.swift; sourceTree = "<group>"; };
+		A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaDataCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		A1861F462312087E009A575C /* PixaPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixaPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1861F492312087E009A575C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1861F4B2312087E009A575C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 			children = (
 				A1861F492312087E009A575C /* AppDelegate.swift */,
 				A1861F4B2312087E009A575C /* ViewController.swift */,
+				A135363C23887657003A39CB /* PixaDataCoordinator.swift */,
+				A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */,
 				A18B98A3235A4FA50072F26F /* PixaCollectionViewCell.swift */,
 				A1F156D5233D5679007EBA2C /* JSONHandler.swift */,
 				A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */,
@@ -215,7 +221,9 @@
 				A1F156D6233D5679007EBA2C /* JSONHandler.swift in Sources */,
 				A1861F4C2312087E009A575C /* ViewController.swift in Sources */,
 				A1ACA0D8233AA6D000FA0E5C /* URLExtensions.swift in Sources */,
+				A135363F23887850003A39CB /* PixaDataCoordinatorDelegate.swift in Sources */,
 				A18B98A4235A4FA50072F26F /* PixaCollectionViewCell.swift in Sources */,
+				A135363D23887657003A39CB /* PixaDataCoordinator.swift in Sources */,
 				A1861F4A2312087E009A575C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
