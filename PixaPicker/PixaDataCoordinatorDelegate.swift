@@ -11,5 +11,6 @@ import Foundation
 protocol PixaDataCoordinatorDelegate {
     
     func didGetNextPage(_ sender: PixaDataCoordinator, urls: [URL])
+    func shouldGetNextPage(withIndexRow: Int) -> Bool
     func didUpdateSearchResults()
 }

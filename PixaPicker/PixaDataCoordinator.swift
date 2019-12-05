@@ -11,25 +11,37 @@ import Foundation
 class PixaDataCoordinator {
     
     var delegate: PixaDataCoordinatorDelegate?
-    var cellImageURLs = [URL]()
+    private var cellImageURLs = [URL]()
+    var imageCount: Int { return cellImageURLs.count}
     var currentPageNumber = 1
+    var currentSearchText = ""
     let maxImagesPerPage = 20
+
     
-    func getNextPage(withCurrentSearchText: String){
+    private func getNextPage(){
         currentPageNumber += 1
-        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: withCurrentSearchText, with: self.currentPageNumber), completion: {
+        (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: currentSearchText, with: self.currentPageNumber), completion: {
             self.delegate?.didGetNextPage(self, urls: $0)
         }))
     }
     
-    func updateSearchResults(with currentSearchText: String){
+    func reloadSearch(){
         currentPageNumber = 1
         (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: currentSearchText, with: currentPageNumber), completion: {
-            self.cellImageURLs = $0 
-            //self.imageCollectionView.reloadData()
+            self.cellImageURLs = $0
         }))
         self.delegate?.didUpdateSearchResults()
     }
     
-    //TODO: getCellImage() func. Logic is in viewcontroller, move here
+    func getImageURL(for index: Int) -> URL{
+        if (delegate?.shouldGetNextPage(withIndexRow: index) ?? false){
+            getNextPage()
+        }
+        return cellImageURLs[index]
+    }
+    
+    func appendURLImageArray(with urls: [URL]){
+        cellImageURLs.append(contentsOf: urls)
+    }
+
 }

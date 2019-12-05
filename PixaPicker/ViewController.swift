@@ -17,7 +17,6 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     let reuseID = "cell"
-    var currentSearchText = ""
     var dataCoordinator:PixaDataCoordinator?
     
     
@@ -43,7 +42,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     //PixaDataCoordinatorDelegate protocol functions
     func didGetNextPage(_ sender: PixaDataCoordinator, urls: [URL]) {
-        self.dataCoordinator?.cellImageURLs.append(contentsOf: urls)
+        dataCoordinator?.appendURLImageArray(with: urls)
         self.imageCollectionView.reloadData()
     }
     
@@ -54,7 +53,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     //UICollectionView protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataCoordinator?.cellImageURLs.count ?? 0
+        return dataCoordinator?.imageCount ?? 0
     }
     
     //where populating of images into cells occurs
@@ -63,13 +62,11 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
         //Loads a bunch of images for "infinite" scrolling.
-        //TODO: This is probably not the correct logic. Revisit later
-        if (self.shouldGetNextPage(withIndexRow: indexPath.row)) {
-            dataCoordinator?.getNextPage(withCurrentSearchText: currentSearchText)
-        }
-        guard let cellImageURLCount = dataCoordinator?.cellImageURLs.count else { return imageCell }
+        //TODO: This is probably not the correct logic. Revisit later        
+        guard let cellImageURLCount = dataCoordinator?.imageCount else { return imageCell }
         if indexPath.row < cellImageURLCount {
-            imageCell.cellImage.sd_setImage(with: dataCoordinator?.cellImageURLs[indexPath.item], placeholderImage: nil)
+            guard let imageURL : URL = dataCoordinator?.getImageURL(for: indexPath.row) else { return imageCell }
+            imageCell.cellImage.sd_setImage(with: imageURL, placeholderImage: nil)
         }
         return imageCell
     }
@@ -97,8 +94,8 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        self.currentSearchText = searchText
-        dataCoordinator?.updateSearchResults(with: currentSearchText)
+        self.dataCoordinator?.currentSearchText = searchText
+        dataCoordinator?.reloadSearch()
     }
     
     override func viewDidLoad() {
@@ -119,13 +116,13 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    private func shouldGetNextPage(withIndexRow: Int) -> Bool{
+    func shouldGetNextPage(withIndexRow: Int) -> Bool{
         guard let currentPageNumber = dataCoordinator?.currentPageNumber else { return false }
         guard let maxImagesPerPage = dataCoordinator?.maxImagesPerPage else { return false }
         let indexRowToAddRemainder = withIndexRow % ((currentPageNumber * maxImagesPerPage) - 2)
         let conditionOne = (indexRowToAddRemainder == 0)
         
-        guard let currentImageAmount = dataCoordinator?.cellImageURLs.count else { return false }
+        guard let currentImageAmount = dataCoordinator?.imageCount else { return false }
         let conditionTwo = (currentImageAmount <= (currentPageNumber * maxImagesPerPage))
         
         return (conditionOne && conditionTwo)
