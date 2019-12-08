@@ -16,13 +16,23 @@ class PixaDataCoordinator {
     var currentPageNumber = 1
     var currentSearchText = ""
     let maxImagesPerPage = 20
+    var isGettingNextPage = false
 
     
     private func getNextPage(){
         currentPageNumber += 1
         (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: currentSearchText, with: self.currentPageNumber), completion: {
-            self.delegate?.didGetNextPage(self, urls: $0)
+            self.appendURLImageArray(with: $0)
+            self.delegate?.didGetNextPage(self)
         }))
+        
+    }
+    
+    func shouldGetNextPage(withIndexRow: Int) -> Bool{
+        let indexRowToAddRemainder = withIndexRow % ((currentPageNumber * maxImagesPerPage) - 2)
+        let conditionOne = (indexRowToAddRemainder == 0)
+        let conditionTwo = (imageCount <= (currentPageNumber * maxImagesPerPage))
+        return (conditionOne && conditionTwo) && (!isGettingNextPage)
     }
     
     func reloadSearch(){
@@ -34,7 +44,7 @@ class PixaDataCoordinator {
     }
     
     func getImageURL(for index: Int) -> URL{
-        if (delegate?.shouldGetNextPage(withIndexRow: index) ?? false){
+        if (shouldGetNextPage(withIndexRow: index) ){
             getNextPage()
         }
         return cellImageURLs[index]

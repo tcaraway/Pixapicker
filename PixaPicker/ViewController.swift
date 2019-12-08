@@ -13,7 +13,6 @@ import SDWebImage
 
 class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate{
     
-
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     let reuseID = "cell"
@@ -41,13 +40,14 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     
     //PixaDataCoordinatorDelegate protocol functions
-    func didGetNextPage(_ sender: PixaDataCoordinator, urls: [URL]) {
-        dataCoordinator?.appendURLImageArray(with: urls)
+    func didGetNextPage(_ sender: PixaDataCoordinator) {
         self.imageCollectionView.reloadData()
+        self.dataCoordinator?.isGettingNextPage = false
     }
     
     func didUpdateSearchResults(){
         self.imageCollectionView.reloadData()
+        self.imageCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true) //scroll back to top
     }
     
     
@@ -116,15 +116,5 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    func shouldGetNextPage(withIndexRow: Int) -> Bool{
-        guard let currentPageNumber = dataCoordinator?.currentPageNumber else { return false }
-        guard let maxImagesPerPage = dataCoordinator?.maxImagesPerPage else { return false }
-        let indexRowToAddRemainder = withIndexRow % ((currentPageNumber * maxImagesPerPage) - 2)
-        let conditionOne = (indexRowToAddRemainder == 0)
-        
-        guard let currentImageAmount = dataCoordinator?.imageCount else { return false }
-        let conditionTwo = (currentImageAmount <= (currentPageNumber * maxImagesPerPage))
-        
-        return (conditionOne && conditionTwo)
-    }
+    
     }
