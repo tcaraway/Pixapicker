@@ -13,7 +13,7 @@ class PixaDataCoordinator {
     var delegate: PixaDataCoordinatorDelegate?
     private var cellImageURLs = [URL]()
     var imageCount: Int { return cellImageURLs.count}
-    var currentPageNumber = 1
+    private var currentPageNumber = 1
     var currentSearchText = ""
     let maxImagesPerPage = 20
     var isGettingNextPage = false
@@ -39,8 +39,8 @@ class PixaDataCoordinator {
         currentPageNumber = 1
         (PixaBayAPIService.loadPixaBayRequest(withURL: URLExtensions.pixabaySearchURL(with: currentSearchText, with: currentPageNumber), completion: {
             self.cellImageURLs = $0
+            self.delegate?.didUpdateSearchResults()
         }))
-        self.delegate?.didUpdateSearchResults()
     }
     
     func getImageURL(for index: Int) -> URL{
