@@ -28,9 +28,7 @@ class PixaBayAPIService {
             do {
                 let result = try JSONDecoder().decode(PixaBayResponse.self, from: data)
                 let hits = result.hits
-                for hit in hits{
-                    imageURLArray.append(hit.webformatURL)
-                }
+                imageURLArray = hits.map { $0.webformatURL }
                 DispatchQueue.main.async {
                     completion(imageURLArray)
                 }

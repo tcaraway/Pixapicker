@@ -11,6 +11,17 @@ import UIKit
 
 class PixaCollectionViewCell : UICollectionViewCell {
     @IBOutlet weak var cellImage: UIImageView!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
+    var delegate: PixaSaveButtonDelegate?
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        print("ITS A TAP_____________________________")
+        delegate?.saveButtonTapped(self)
+    }
+    
+    
+    
 }
 
 
