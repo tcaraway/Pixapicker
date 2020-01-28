@@ -51,7 +51,6 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     //PixaSaveButtonDelegate protocol functions
     func saveButtonTapped(_ sender: PixaCollectionViewCell) {
-        print("TAPPED")
         guard let image = sender.cellImage.image else { return }
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }

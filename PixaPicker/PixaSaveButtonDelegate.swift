@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol PixaSaveButtonDelegate{
+protocol PixaSaveButtonDelegate: class {
     func saveButtonTapped(_ sender: PixaCollectionViewCell)
 }
