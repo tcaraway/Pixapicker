@@ -38,18 +38,47 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7A2-fT-5b9">
                                                     <rect key="frame" x="0.0" y="0.0" width="114" height="104"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUL-YI-7tG" userLabel="Favorite">
+                                                    <rect key="frame" x="0.0" y="54" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="E3M-qS-gHW"/>
+                                                        <constraint firstAttribute="height" constant="50" id="Ejq-rM-12G"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Fave" image="Favorite Button-1.png">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h64-0L-AYf" userLabel="Save">
+                                                    <rect key="frame" x="64" y="54" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="FC5-Iu-1aa"/>
+                                                        <constraint firstAttribute="height" constant="50" id="Tan-qA-QhI"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Save" image="Download Button clone-1.png">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="saveButtonTapped:" destination="5rY-12-R7I" eventType="touchUpInside" id="XFh-m6-t02"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="CUL-YI-7tG" secondAttribute="bottom" id="4Zj-al-dYi"/>
+                                            <constraint firstAttribute="trailing" secondItem="h64-0L-AYf" secondAttribute="trailing" id="Bxa-3t-ftY"/>
+                                            <constraint firstAttribute="bottom" secondItem="h64-0L-AYf" secondAttribute="bottom" id="Qed-mJ-yOB"/>
                                             <constraint firstItem="7A2-fT-5b9" firstAttribute="centerX" secondItem="5rY-12-R7I" secondAttribute="centerX" id="SSO-oZ-4Fx"/>
                                             <constraint firstItem="7A2-fT-5b9" firstAttribute="centerY" secondItem="5rY-12-R7I" secondAttribute="centerY" id="X4U-XC-dpw"/>
                                             <constraint firstItem="7A2-fT-5b9" firstAttribute="leading" secondItem="5rY-12-R7I" secondAttribute="leading" id="ckf-yT-6RW"/>
+                                            <constraint firstItem="CUL-YI-7tG" firstAttribute="leading" secondItem="5rY-12-R7I" secondAttribute="leading" id="fAy-RI-0Zo"/>
                                             <constraint firstAttribute="bottom" secondItem="7A2-fT-5b9" secondAttribute="bottom" id="g9v-G9-qN6"/>
                                             <constraint firstAttribute="trailing" secondItem="7A2-fT-5b9" secondAttribute="trailing" id="qdU-C4-Qt8"/>
                                             <constraint firstItem="7A2-fT-5b9" firstAttribute="top" secondItem="5rY-12-R7I" secondAttribute="top" id="tkn-B2-CFY"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="cellImage" destination="7A2-fT-5b9" id="dHE-nG-Rc8"/>
+                                            <outlet property="favoriteButton" destination="CUL-YI-7tG" id="0PH-g4-HvF"/>
+                                            <outlet property="saveButton" destination="h64-0L-AYf" id="ixw-IV-LYu"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -96,4 +125,8 @@
             <point key="canvasLocation" x="153.62318840579712" y="109.82142857142857"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Download Button clone-1.png" width="100" height="100"/>
+        <image name="Favorite Button-1.png" width="100" height="100"/>
+    </resources>
 </document>

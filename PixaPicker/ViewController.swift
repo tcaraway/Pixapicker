@@ -11,12 +11,12 @@
 import UIKit
 import SDWebImage
 
-class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate{
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate, PixaSaveButtonDelegate{
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     let reuseID = "cell"
-    var dataCoordinator:PixaDataCoordinator?
+    let dataCoordinator = PixaDataCoordinator()
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -42,7 +42,6 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     //PixaDataCoordinatorDelegate protocol functions
     func didGetNextPage(_ sender: PixaDataCoordinator) {
         self.imageCollectionView.reloadData()
-        self.dataCoordinator?.isGettingNextPage = false
     }
     
     func didUpdateSearchResults(){
@@ -50,10 +49,15 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         self.imageCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true) //scroll back to top
     }
     
+    //PixaSaveButtonDelegate protocol functions
+    func saveButtonTapped(_ sender: PixaCollectionViewCell) {
+        guard let image = sender.cellImage.image else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
     
     //UICollectionView protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataCoordinator?.imageCount ?? 0
+        return dataCoordinator.imageCount
     }
     
     //where populating of images into cells occurs
@@ -61,22 +65,14 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
+        imageCell.delegate = self
+        
         //Loads a bunch of images for "infinite" scrolling.
-        //TODO: This is probably not the correct logic. Revisit later        
-        guard let cellImageURLCount = dataCoordinator?.imageCount else { return imageCell }
-        if indexPath.row < cellImageURLCount {
-            guard let imageURL : URL = dataCoordinator?.getImageURL(for: indexPath.row) else { return imageCell }
+        if indexPath.row < dataCoordinator.imageCount {
+            let imageURL : URL = dataCoordinator.getImageURL(for: indexPath.row)
             imageCell.cellImage.sd_setImage(with: imageURL, placeholderImage: nil)
         }
         return imageCell
-    }
-    
-    
-    //UICollectionViewDelegate protocol functions
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedCell = imageCollectionView.cellForItem(at: indexPath) as? PixaCollectionViewCell
-        guard let image = selectedCell?.cellImage.image else { return }
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     //Saving tapped photos to album
@@ -94,15 +90,14 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        self.dataCoordinator?.currentSearchText = searchText
-        dataCoordinator?.reloadSearch()
+        self.dataCoordinator.currentSearchText = searchText
+        dataCoordinator.reloadSearch()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataCoordinator = PixaDataCoordinator()
         setupSearchController()
-        self.dataCoordinator?.delegate = self
+        self.dataCoordinator.delegate = self
     }
 
     private func setupSearchController(){
@@ -115,6 +110,4 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-    
-    
     }
