@@ -10,8 +10,9 @@
 
 import UIKit
 import SDWebImage
+import CoreData
 
-class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate, PixaSaveButtonDelegate{
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate, PixaSaveButtonDelegate, PixaFavoriteButtonDelegate{
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
@@ -53,6 +54,11 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     func saveButtonTapped(_ sender: PixaCollectionViewCell) {
         guard let image = sender.cellImage.image else { return }
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    //PixaFavoriteButtonDelegate protocol functions
+    func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
+        //TODO
     }
     
     //UICollectionView protocol functions

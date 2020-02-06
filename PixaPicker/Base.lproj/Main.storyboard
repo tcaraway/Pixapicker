@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yDs-fT-sZf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ru5-Ev-8bz">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qq0-ZU-Cv6">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XXu-MF-c6Z">
                                     <size key="itemSize" width="114" height="104"/>
@@ -106,10 +106,29 @@
             </objects>
             <point key="canvasLocation" x="1063.768115942029" y="109.82142857142857"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="0HX-Ap-WZE">
+            <objects>
+                <tabBarController id="Ru5-Ev-8bz" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SGy-wp-yjC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="yDs-fT-sZf" kind="relationship" relationship="viewControllers" id="W0h-9r-Xqi"/>
+                        <segue destination="qmC-UG-P2j" kind="relationship" relationship="viewControllers" id="mQv-F9-eXS"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uuz-0O-6ke" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1087" y="588"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="PZe-oY-pg2">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yDs-fT-sZf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="VLE-UC-VYL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9xp-Ky-zct">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -124,8 +143,106 @@
             </objects>
             <point key="canvasLocation" x="153.62318840579712" y="109.82142857142857"/>
         </scene>
+        <!--Pixa Favorites View Controller-->
+        <scene sceneID="Ebh-1j-w1Y">
+            <objects>
+                <viewController definesPresentationContext="YES" id="qmC-UG-P2j" customClass="PixaFavoritesViewController" customModule="PixaPicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zc1-0h-mTs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OSd-gQ-xbE">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5cE-cN-RRd">
+                                    <size key="itemSize" width="114" height="104"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Qa5-IR-NDN" customClass="PixaCollectionViewCell" customModule="PixaPicker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="114" height="104"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="114" height="104"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3XK-BA-UNP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="114" height="104"/>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nXj-pu-WXL" userLabel="Unfavorite">
+                                                    <rect key="frame" x="0.0" y="54" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="8Qw-Xs-Ieq"/>
+                                                        <constraint firstAttribute="height" constant="50" id="oSx-b0-ISo"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Fave" image="Delete Button-1.png">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vn4-bg-mDU" userLabel="Save">
+                                                    <rect key="frame" x="64" y="54" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="I4w-wC-7aN"/>
+                                                        <constraint firstAttribute="width" constant="50" id="lNl-5j-J2L"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Save" image="Download Button clone-1.png">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="saveButtonTapped:" destination="Qa5-IR-NDN" eventType="touchUpInside" id="10N-yv-H3u"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="3XK-BA-UNP" secondAttribute="bottom" id="0bZ-Eh-Mv4"/>
+                                            <constraint firstItem="nXj-pu-WXL" firstAttribute="leading" secondItem="Qa5-IR-NDN" secondAttribute="leading" id="2r8-Th-tHZ"/>
+                                            <constraint firstItem="3XK-BA-UNP" firstAttribute="top" secondItem="Qa5-IR-NDN" secondAttribute="top" id="BoU-c3-8gL"/>
+                                            <constraint firstAttribute="bottom" secondItem="nXj-pu-WXL" secondAttribute="bottom" id="FcX-bI-CXs"/>
+                                            <constraint firstAttribute="bottom" secondItem="vn4-bg-mDU" secondAttribute="bottom" id="P9P-vr-V4w"/>
+                                            <constraint firstAttribute="trailing" secondItem="3XK-BA-UNP" secondAttribute="trailing" id="Pkb-xR-s0d"/>
+                                            <constraint firstItem="3XK-BA-UNP" firstAttribute="centerX" secondItem="Qa5-IR-NDN" secondAttribute="centerX" id="dmL-0G-n2Y"/>
+                                            <constraint firstItem="3XK-BA-UNP" firstAttribute="centerY" secondItem="Qa5-IR-NDN" secondAttribute="centerY" id="oAF-SN-5qB"/>
+                                            <constraint firstItem="3XK-BA-UNP" firstAttribute="leading" secondItem="Qa5-IR-NDN" secondAttribute="leading" id="rQa-Ex-ptj"/>
+                                            <constraint firstAttribute="trailing" secondItem="vn4-bg-mDU" secondAttribute="trailing" id="zTo-2G-081"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="cellImage" destination="3XK-BA-UNP" id="SYG-rA-2pC"/>
+                                            <outlet property="favoriteButton" destination="nXj-pu-WXL" id="qb6-Qw-vrE"/>
+                                            <outlet property="saveButton" destination="vn4-bg-mDU" id="AuV-v2-tXp"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="qmC-UG-P2j" id="2PL-Oi-MKB"/>
+                                    <outlet property="delegate" destination="qmC-UG-P2j" id="6Gd-8H-4rP"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="OSd-gQ-xbE" firstAttribute="leading" secondItem="JDF-yi-Tho" secondAttribute="leading" id="3jd-sh-5RT"/>
+                            <constraint firstItem="JDF-yi-Tho" firstAttribute="trailing" secondItem="OSd-gQ-xbE" secondAttribute="trailing" id="6qf-z8-MAW"/>
+                            <constraint firstItem="JDF-yi-Tho" firstAttribute="bottom" secondItem="OSd-gQ-xbE" secondAttribute="bottom" id="dxz-j1-HJt"/>
+                            <constraint firstItem="OSd-gQ-xbE" firstAttribute="top" secondItem="JDF-yi-Tho" secondAttribute="top" id="yi7-Zn-xbT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="JDF-yi-Tho"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="cEz-o7-prx"/>
+                    <navigationItem key="navigationItem" id="DhD-jH-Vqt"/>
+                    <connections>
+                        <outlet property="imageCollectionView" destination="OSd-gQ-xbE" id="W32-oc-M9R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vfQ-nz-0lY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1064" y="793"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Delete Button-1.png" width="100" height="100"/>
         <image name="Download Button clone-1.png" width="100" height="100"/>
         <image name="Favorite Button-1.png" width="100" height="100"/>
     </resources>
