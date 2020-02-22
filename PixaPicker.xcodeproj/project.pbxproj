@@ -22,7 +22,6 @@
 		A1ACA0D8233AA6D000FA0E5C /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */; };
 		A1D4B1A623E89E410072E953 /* PixaFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D4B1A523E89E410072E953 /* PixaFavoritesViewController.swift */; };
 		A1D4B1A823E8A4BF0072E953 /* PixaFavoriteButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D4B1A723E8A4BF0072E953 /* PixaFavoriteButtonDelegate.swift */; };
-		A1D4B1AA23E8A4D70072E953 /* PixaUnfavoriteButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D4B1A923E8A4D70072E953 /* PixaUnfavoriteButtonDelegate.swift */; };
 		A1EE8B1723DA428D00260122 /* PixaSaveButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EE8B1623DA428D00260122 /* PixaSaveButtonDelegate.swift */; };
 		A1F156D6233D5679007EBA2C /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F156D5233D5679007EBA2C /* JSONHandler.swift */; };
 /* End PBXBuildFile section */
@@ -47,7 +46,6 @@
 		A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		A1D4B1A523E89E410072E953 /* PixaFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaFavoritesViewController.swift; sourceTree = "<group>"; };
 		A1D4B1A723E8A4BF0072E953 /* PixaFavoriteButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaFavoriteButtonDelegate.swift; sourceTree = "<group>"; };
-		A1D4B1A923E8A4D70072E953 /* PixaUnfavoriteButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaUnfavoriteButtonDelegate.swift; sourceTree = "<group>"; };
 		A1EE8B1623DA428D00260122 /* PixaSaveButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaSaveButtonDelegate.swift; sourceTree = "<group>"; };
 		A1F156D5233D5679007EBA2C /* JSONHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,7 +102,6 @@
 				A1D4B1A523E89E410072E953 /* PixaFavoritesViewController.swift */,
 				A1EE8B1623DA428D00260122 /* PixaSaveButtonDelegate.swift */,
 				A1D4B1A723E8A4BF0072E953 /* PixaFavoriteButtonDelegate.swift */,
-				A1D4B1A923E8A4D70072E953 /* PixaUnfavoriteButtonDelegate.swift */,
 				A18B98A3235A4FA50072F26F /* PixaCollectionViewCell.swift */,
 				A1F156D5233D5679007EBA2C /* JSONHandler.swift */,
 				A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */,
@@ -248,7 +245,6 @@
 				A119302323ECA2B100045277 /* PixaFavoritesCoordinatorDelegate.swift in Sources */,
 				A119304723ECA96000045277 /* PixaPicker.xcdatamodeld in Sources */,
 				A119302123ECA25B00045277 /* PixaFavoritesCoordinator.swift in Sources */,
-				A1D4B1AA23E8A4D70072E953 /* PixaUnfavoriteButtonDelegate.swift in Sources */,
 				A18B98A4235A4FA50072F26F /* PixaCollectionViewCell.swift in Sources */,
 				A135363D23887657003A39CB /* PixaDataCoordinator.swift in Sources */,
 				A1861F4A2312087E009A575C /* AppDelegate.swift in Sources */,

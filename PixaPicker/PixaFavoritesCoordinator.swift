@@ -12,5 +12,17 @@ import CoreData
 class PixaFavoritesCoordinator {
     
     var delegate: PixaFavoritesCoordinatorDelegate?
-    private var cellImageURLs = [URL]()
+    var cellImageManagedObjects = [NSManagedObject]()
+    var cellImageURLs = [String]()
+    
+    func convertManagedObjectsToStrings(){
+        self.cellImageURLs = [String]()
+        for obj in cellImageManagedObjects{
+            let temp = obj.value(forKey: "urlstring")
+            cellImageURLs.append(temp as! String)
+        }
+        
+    }
+    
+
 }

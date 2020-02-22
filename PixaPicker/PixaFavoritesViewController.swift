@@ -9,15 +9,17 @@
 import Foundation
 import SDWebImage
 import UIKit
+import CoreData
 
-class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, PixaUnfavoriteButtonDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaFavoritesCoordinatorDelegate{
+class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, PixaFavoriteButtonDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaFavoritesCoordinatorDelegate{
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     let reuseID = "cell"
+    let favoritesCoordinator = PixaFavoritesCoordinator()
     
     //UICollectionViewDataSource protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return favoritesCoordinator.cellImageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -25,6 +27,11 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
         imageCell.delegate = self
+        imageCell.delegate2 = self
+        
+        let imageURL = URL(string: favoritesCoordinator.cellImageURLs[indexPath.row])
+        imageCell.cellImage.sd_setImage(with: imageURL, placeholderImage: nil)
+        imageCell.urlString = favoritesCoordinator.cellImageURLs[indexPath.row]
         
         return imageCell
     }
@@ -54,8 +61,10 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
-    func unfavoriteButtonTapped(_ sender: PixaCollectionViewCell) {
-        //TODO
+    func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
+        favoritesCoordinator.cellImageURLs.remove(at: imageCollectionView.indexPath(for: sender)!.row)
+        removeURL(urlstring: sender.urlString!)
+        self.imageCollectionView.reloadData()
     }
     
     //Saving tapped photos to album
@@ -71,5 +80,54 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        loadURLs()
+        self.imageCollectionView.reloadData()
+        print(favoritesCoordinator.cellImageURLs.count)
+    }
+    
+    override func viewDidLoad() {
+        loadURLs()
+        self.imageCollectionView.reloadData()
+        print(favoritesCoordinator.cellImageURLs.count)
+    }
+    
+    private func loadURLs() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ImageURL")
+        
+        do {
+            favoritesCoordinator.cellImageManagedObjects = try managedContext.fetch(fetchRequest)
+            favoritesCoordinator.convertManagedObjectsToStrings()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    private func removeURL(urlstring: String){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ImageURL")
+        
+        if let result = try? managedContext.fetch(fetchRequest) {
+            for object in result {
+                if((object.value(forKey: "urlstring") as! String) == urlstring){
+                    managedContext.delete(object)
+                }
+            }
+        }
+        do{
+            try managedContext.save()
+        } catch let error as NSError{
+            print("Could not save. \(error)")
+        }
+    }
     
 }

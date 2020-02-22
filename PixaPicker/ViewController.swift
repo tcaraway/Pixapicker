@@ -58,7 +58,9 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     //PixaFavoriteButtonDelegate protocol functions
     func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
-        //TODO
+        saveURL(withString: sender.urlString!)
+        imageCollectionView.reloadData()
+
     }
     
     //UICollectionView protocol functions
@@ -69,14 +71,18 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     //where populating of images into cells occurs
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
         imageCell.delegate = self
+        imageCell.delegate2 = self
         
         //Loads a bunch of images for "infinite" scrolling.
         if indexPath.row < dataCoordinator.imageCount {
+            imageCell.favoriteButton.isEnabled = true
             let imageURL : URL = dataCoordinator.getImageURL(for: indexPath.row)
             imageCell.cellImage.sd_setImage(with: imageURL, placeholderImage: nil)
+            imageCell.urlString = imageURL.absoluteString
         }
         return imageCell
     }
@@ -116,4 +122,29 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
+    private func saveURL(withString: String){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "ImageURL", in: managedContext)!
+        
+        let newURL = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        newURL.setValue(withString, forKeyPath: "urlstring")
+        
+        do{
+            try managedContext.save()
+        } catch let error as NSError{
+            print("Could not save. \(error)")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+    }
+    
     }

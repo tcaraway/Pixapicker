@@ -9,5 +9,5 @@
 import Foundation
 
 protocol PixaUnfavoriteButtonDelegate: class {
-    func unfavoriteButtonTapped(_ sender: PixaCollectionViewCell)
+    func favoriteButtonTapped(_ sender: PixaCollectionViewCell)
 }
