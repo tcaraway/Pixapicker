@@ -14,7 +14,6 @@ class PixaDataCoordinator {
     
     var delegate: PixaDataCoordinatorDelegate?
     private var cellImageURLs = [URL]()
-    var favoriteURLStrings = [String]()
     var imageCount: Int { return cellImageURLs.count}
     private var currentPageNumber = 1
     var currentSearchText = ""
@@ -57,5 +56,6 @@ class PixaDataCoordinator {
     func appendURLImageArray(with urls: [URL]){
         cellImageURLs.append(contentsOf: urls)
     }
+    
     
 }

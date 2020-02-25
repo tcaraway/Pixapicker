@@ -18,6 +18,8 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     let reuseID = "cell"
     let dataCoordinator = PixaDataCoordinator()
+    let favoritesCoordinator = PixaFavoritesCoordinator() //ASSIGN TO EXISTING FAVORITES COORDINATOR INSTEAD
+    let teststring = "SEARCH"
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -58,9 +60,8 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     //PixaFavoriteButtonDelegate protocol functions
     func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
-        saveURL(withString: sender.urlString!)
+        favoritesCoordinator.saveURL(withString: sender.urlString!)
         imageCollectionView.reloadData()
-
     }
     
     //UICollectionView protocol functions
@@ -109,6 +110,8 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
+        //ASSIGN FAVORITES COORDINATOR TO EXISTING FAVORITES COORDINATOR
+        //MAKE FAVORITES COORDINATOR A VARIABLE IN APP DELEGATE????
         self.dataCoordinator.delegate = self
     }
 
@@ -123,28 +126,20 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    private func saveURL(withString: String){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "ImageURL", in: managedContext)!
-        
-        let newURL = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        newURL.setValue(withString, forKeyPath: "urlstring")
-        
-        do{
-            try managedContext.save()
-        } catch let error as NSError{
-            print("Could not save. \(error)")
-        }
-    }
     
-    override func viewDidAppear(_ animated: Bool) {
-
+    private func refreshFavoriteButtons(){
+        //make all buttons enabled at first
+        for case let cell as PixaCollectionViewCell in imageCollectionView.visibleCells {
+            cell.favoriteButton.isEnabled = true
+        }
+        //data coordinator loads favorited urls from core data
+        favoritesCoordinator.loadURLs()
+        //for each cell, if its url can be found in data coordinators loaded array, disable its favorite button
+        for case let cell as PixaCollectionViewCell in imageCollectionView.visibleCells {
+            if(favoritesCoordinator.isFavorited(urlstring: cell.urlString!)){
+                cell.favoriteButton.isEnabled = false
+            }
+        }
     }
     
     }

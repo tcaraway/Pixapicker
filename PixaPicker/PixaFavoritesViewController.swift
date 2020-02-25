@@ -16,6 +16,7 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
     @IBOutlet weak var imageCollectionView: UICollectionView!
     let reuseID = "cell"
     let favoritesCoordinator = PixaFavoritesCoordinator()
+    let teststring = "FAVES"
     
     //UICollectionViewDataSource protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -63,7 +64,7 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
     
     func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
         favoritesCoordinator.cellImageURLs.remove(at: imageCollectionView.indexPath(for: sender)!.row)
-        removeURL(urlstring: sender.urlString!)
+        favoritesCoordinator.removeURL(urlstring: sender.urlString!)
         self.imageCollectionView.reloadData()
     }
     
@@ -81,53 +82,17 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        loadURLs()
+        favoritesCoordinator.loadURLs()
         self.imageCollectionView.reloadData()
         print(favoritesCoordinator.cellImageURLs.count)
     }
     
     override func viewDidLoad() {
-        loadURLs()
+        favoritesCoordinator.loadURLs()
         self.imageCollectionView.reloadData()
         print(favoritesCoordinator.cellImageURLs.count)
     }
     
-    private func loadURLs() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ImageURL")
-        
-        do {
-            favoritesCoordinator.cellImageManagedObjects = try managedContext.fetch(fetchRequest)
-            favoritesCoordinator.convertManagedObjectsToStrings()
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
     
-    private func removeURL(urlstring: String){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ImageURL")
-        
-        if let result = try? managedContext.fetch(fetchRequest) {
-            for object in result {
-                if((object.value(forKey: "urlstring") as! String) == urlstring){
-                    managedContext.delete(object)
-                }
-            }
-        }
-        do{
-            try managedContext.save()
-        } catch let error as NSError{
-            print("Could not save. \(error)")
-        }
-    }
     
 }

@@ -109,10 +109,10 @@
             </objects>
             <point key="canvasLocation" x="1063.768115942029" y="109.82142857142857"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Pixa Tab Bar Controller-->
         <scene sceneID="0HX-Ap-WZE">
             <objects>
-                <tabBarController id="Ru5-Ev-8bz" sceneMemberID="viewController">
+                <tabBarController id="Ru5-Ev-8bz" customClass="PixaTabBarController" customModule="PixaPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SGy-wp-yjC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
