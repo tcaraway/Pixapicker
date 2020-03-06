@@ -37,6 +37,7 @@ class PixaFavoritesCoordinator {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        delegate?.didUpdateFavorites()
     }
     
     func removeURL(urlstring: String){
@@ -58,6 +59,7 @@ class PixaFavoritesCoordinator {
         } catch let error as NSError{
             print("Could not save. \(error)")
         }
+        delegate?.didUpdateFavorites()
     }
     
     func saveURL(withString: String){
@@ -78,6 +80,7 @@ class PixaFavoritesCoordinator {
         } catch let error as NSError{
             print("Could not save. \(error)")
         }
+        delegate?.didUpdateFavorites()
     }
     
     func isFavorited(urlstring: String) -> Bool{

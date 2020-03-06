@@ -10,14 +10,13 @@ import Foundation
 import UIKit
 
 class PixaTabBarController: UITabBarController{
-    var searchViewController = ViewController()
-    var favoritesViewController = PixaFavoritesViewController()
+    var tabBarCoordinator = PixaTabBarCoordinator()
     
     override func viewDidLoad() {
         let navController = self.viewControllers![0] as! UINavigationController
-        searchViewController = navController.topViewController as! ViewController
-        favoritesViewController = self.viewControllers![1] as! PixaFavoritesViewController
-        print(searchViewController.teststring) //FOR TESTING
-        print(favoritesViewController.teststring) //FOR TESTING
+        tabBarCoordinator.searchViewController = (navController.topViewController as! ViewController)
+        tabBarCoordinator.favesViewController = (self.viewControllers![1] as! PixaFavoritesViewController)
+        print(tabBarCoordinator.favesViewController.testString)
+        tabBarCoordinator.setDelegates()
     }
 }

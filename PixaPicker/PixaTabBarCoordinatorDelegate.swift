@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol PixaTabBarCoordinatorDelegate: class {
+    //TODO
+}

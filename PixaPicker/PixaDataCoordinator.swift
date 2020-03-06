@@ -14,7 +14,7 @@ class PixaDataCoordinator {
     
     var delegate: PixaDataCoordinatorDelegate?
     private var cellImageURLs = [URL]()
-    var imageCount: Int { return cellImageURLs.count}
+    var imageCount: Int { return cellImageURLs.count }
     private var currentPageNumber = 1
     var currentSearchText = ""
     let maxImagesPerPage = 20

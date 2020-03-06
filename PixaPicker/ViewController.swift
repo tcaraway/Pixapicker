@@ -18,8 +18,9 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     let reuseID = "cell"
     let dataCoordinator = PixaDataCoordinator()
-    let favoritesCoordinator = PixaFavoritesCoordinator() //ASSIGN TO EXISTING FAVORITES COORDINATOR INSTEAD
-    let teststring = "SEARCH"
+    var parentTabController: PixaTabBarController?
+    var favoritesCoordinator: PixaFavoritesCoordinator?
+    var delegate: PixaViewControllerDelegate?
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -60,8 +61,9 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     //PixaFavoriteButtonDelegate protocol functions
     func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
-        favoritesCoordinator.saveURL(withString: sender.urlString!)
-        imageCollectionView.reloadData()
+        favoritesCoordinator!.saveURL(withString: sender.urlString!)
+        refreshFavoriteButtons()
+        //imageCollectionView.reloadData()
     }
     
     //UICollectionView protocol functions
@@ -105,14 +107,15 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         guard let searchText = searchController.searchBar.text else { return }
         self.dataCoordinator.currentSearchText = searchText
         dataCoordinator.reloadSearch()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        //ASSIGN FAVORITES COORDINATOR TO EXISTING FAVORITES COORDINATOR
-        //MAKE FAVORITES COORDINATOR A VARIABLE IN APP DELEGATE????
         self.dataCoordinator.delegate = self
+        parentTabController = (tabBarController as! PixaTabBarController)
+        favoritesCoordinator = parentTabController!.tabBarCoordinator.favesViewController.favoritesCoordinator
     }
 
     private func setupSearchController(){
@@ -133,13 +136,15 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
             cell.favoriteButton.isEnabled = true
         }
         //data coordinator loads favorited urls from core data
-        favoritesCoordinator.loadURLs()
+        favoritesCoordinator!.loadURLs()
         //for each cell, if its url can be found in data coordinators loaded array, disable its favorite button
         for case let cell as PixaCollectionViewCell in imageCollectionView.visibleCells {
-            if(favoritesCoordinator.isFavorited(urlstring: cell.urlString!)){
+            if(favoritesCoordinator!.isFavorited(urlstring: cell.urlString!)){
                 cell.favoriteButton.isEnabled = false
+                print("isfavorited")
             }
         }
+        delegate!.didUpdateFavorites()
     }
     
     }

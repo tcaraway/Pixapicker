@@ -18,12 +18,12 @@ class PixaCollectionViewCell : UICollectionViewCell {
     var urlString: String?
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        delegate?.saveButtonTapped(self)
+        delegate!.saveButtonTapped(self)
     }
     
     
     @IBAction func faveButtonTapped(_ sender: Any) {
-        delegate2?.favoriteButtonTapped(self)
+        delegate2!.favoriteButtonTapped(self)
     }
     
 }

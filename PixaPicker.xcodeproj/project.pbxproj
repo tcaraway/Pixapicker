@@ -14,6 +14,7 @@
 		A13092942405B22B006459E4 /* PixaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13092932405B22B006459E4 /* PixaTabBarController.swift */; };
 		A13092962405B697006459E4 /* PixaTabBarCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13092952405B697006459E4 /* PixaTabBarCoordinatorDelegate.swift */; };
 		A13092982405B6AD006459E4 /* PixaTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13092972405B6AD006459E4 /* PixaTabBarCoordinator.swift */; };
+		A130929A2405BED0006459E4 /* PixaViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13092992405BED0006459E4 /* PixaViewControllerDelegate.swift */; };
 		A135363D23887657003A39CB /* PixaDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135363C23887657003A39CB /* PixaDataCoordinator.swift */; };
 		A135363F23887850003A39CB /* PixaDataCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */; };
 		A1861F4A2312087E009A575C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1861F492312087E009A575C /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 		A13092932405B22B006459E4 /* PixaTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaTabBarController.swift; sourceTree = "<group>"; };
 		A13092952405B697006459E4 /* PixaTabBarCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaTabBarCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		A13092972405B6AD006459E4 /* PixaTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaTabBarCoordinator.swift; sourceTree = "<group>"; };
+		A13092992405BED0006459E4 /* PixaViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A135363C23887657003A39CB /* PixaDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaDataCoordinator.swift; sourceTree = "<group>"; };
 		A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaDataCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		A1861F462312087E009A575C /* PixaPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixaPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,21 +102,22 @@
 			children = (
 				A1861F492312087E009A575C /* AppDelegate.swift */,
 				A119304523ECA96000045277 /* PixaPicker.xcdatamodeld */,
-				A1861F4B2312087E009A575C /* ViewController.swift */,
-				A13092952405B697006459E4 /* PixaTabBarCoordinatorDelegate.swift */,
+				A13092932405B22B006459E4 /* PixaTabBarController.swift */,
 				A13092972405B6AD006459E4 /* PixaTabBarCoordinator.swift */,
+				A13092952405B697006459E4 /* PixaTabBarCoordinatorDelegate.swift */,
+				A1861F4B2312087E009A575C /* ViewController.swift */,
+				A1D4B1A523E89E410072E953 /* PixaFavoritesViewController.swift */,
+				A13092992405BED0006459E4 /* PixaViewControllerDelegate.swift */,
 				A135363C23887657003A39CB /* PixaDataCoordinator.swift */,
+				A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */,
 				A119302023ECA25B00045277 /* PixaFavoritesCoordinator.swift */,
 				A119302223ECA2B100045277 /* PixaFavoritesCoordinatorDelegate.swift */,
-				A135363E23887850003A39CB /* PixaDataCoordinatorDelegate.swift */,
-				A1D4B1A523E89E410072E953 /* PixaFavoritesViewController.swift */,
 				A1EE8B1623DA428D00260122 /* PixaSaveButtonDelegate.swift */,
 				A1D4B1A723E8A4BF0072E953 /* PixaFavoriteButtonDelegate.swift */,
 				A18B98A3235A4FA50072F26F /* PixaCollectionViewCell.swift */,
 				A1F156D5233D5679007EBA2C /* JSONHandler.swift */,
 				A1ACA0D7233AA6D000FA0E5C /* URLExtensions.swift */,
 				A1861F4D2312087E009A575C /* Main.storyboard */,
-				A13092932405B22B006459E4 /* PixaTabBarController.swift */,
 				A1861F5023120883009A575C /* Assets.xcassets */,
 				A1861F5223120883009A575C /* LaunchScreen.storyboard */,
 				A1861F5523120883009A575C /* Info.plist */,
@@ -255,6 +258,7 @@
 				A119302323ECA2B100045277 /* PixaFavoritesCoordinatorDelegate.swift in Sources */,
 				A13092982405B6AD006459E4 /* PixaTabBarCoordinator.swift in Sources */,
 				A119304723ECA96000045277 /* PixaPicker.xcdatamodeld in Sources */,
+				A130929A2405BED0006459E4 /* PixaViewControllerDelegate.swift in Sources */,
 				A119302123ECA25B00045277 /* PixaFavoritesCoordinator.swift in Sources */,
 				A18B98A4235A4FA50072F26F /* PixaCollectionViewCell.swift in Sources */,
 				A135363D23887657003A39CB /* PixaDataCoordinator.swift in Sources */,

@@ -11,12 +11,15 @@ import SDWebImage
 import UIKit
 import CoreData
 
+
+//NOTE: WHEN REMOVING PICS FROM FAVES, WILL ALSO REMOVE ANY DUPLICATES. WONT BE ISSUE ONCE WE DISABLE FAVORITE BUTTON AFTER IT GETS PRESSED IN SEARCHVIEWCONTROLLER
 class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, PixaFavoriteButtonDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaFavoritesCoordinatorDelegate{
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     let reuseID = "cell"
     let favoritesCoordinator = PixaFavoritesCoordinator()
-    let teststring = "FAVES"
+    var delegate: PixaViewControllerDelegate?
+    let testString = "FAVES CONTROLLER EXISTS"
     
     //UICollectionViewDataSource protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -35,6 +38,12 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
         imageCell.urlString = favoritesCoordinator.cellImageURLs[indexPath.row]
         
         return imageCell
+    }
+    
+    //PixFavoritesCoordinatorDelegate protocol
+    func didUpdateFavorites() {
+        print("didUpdate 1")
+        delegate?.didUpdateFavorites()
     }
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -65,7 +74,6 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
     func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
         favoritesCoordinator.cellImageURLs.remove(at: imageCollectionView.indexPath(for: sender)!.row)
         favoritesCoordinator.removeURL(urlstring: sender.urlString!)
-        self.imageCollectionView.reloadData()
     }
     
     //Saving tapped photos to album
@@ -83,13 +91,12 @@ class PixaFavoritesViewController: UIViewController, PixaSaveButtonDelegate, Pix
     
     override func viewDidAppear(_ animated: Bool) {
         favoritesCoordinator.loadURLs()
-        self.imageCollectionView.reloadData()
         print(favoritesCoordinator.cellImageURLs.count)
     }
     
     override func viewDidLoad() {
+        favoritesCoordinator.delegate = self
         favoritesCoordinator.loadURLs()
-        self.imageCollectionView.reloadData()
         print(favoritesCoordinator.cellImageURLs.count)
     }
     
