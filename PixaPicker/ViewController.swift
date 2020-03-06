@@ -10,13 +10,17 @@
 
 import UIKit
 import SDWebImage
+import CoreData
 
-class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate, PixaSaveButtonDelegate{
+class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PixaDataCoordinatorDelegate, PixaSaveButtonDelegate, PixaFavoriteButtonDelegate{
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     let reuseID = "cell"
     let dataCoordinator = PixaDataCoordinator()
+    var parentTabController: PixaTabBarController?
+    var favoritesCoordinator: PixaFavoritesCoordinator?
+    var delegate: PixaViewControllerDelegate?
     
     
     //UICollectionViewDelegateFlowLayout protocol functions
@@ -55,6 +59,13 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
+    //PixaFavoriteButtonDelegate protocol functions
+    func favoriteButtonTapped(_ sender: PixaCollectionViewCell) {
+        favoritesCoordinator!.saveURL(withString: sender.urlString!)
+        refreshFavoriteButtons()
+        //imageCollectionView.reloadData()
+    }
+    
     //UICollectionView protocol functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataCoordinator.imageCount
@@ -63,14 +74,18 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     //where populating of images into cells occurs
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath as IndexPath) as! PixaCollectionViewCell
         
         imageCell.delegate = self
+        imageCell.delegate2 = self
         
         //Loads a bunch of images for "infinite" scrolling.
         if indexPath.row < dataCoordinator.imageCount {
+            imageCell.favoriteButton.isEnabled = true
             let imageURL : URL = dataCoordinator.getImageURL(for: indexPath.row)
             imageCell.cellImage.sd_setImage(with: imageURL, placeholderImage: nil)
+            imageCell.urlString = imageURL.absoluteString
         }
         return imageCell
     }
@@ -92,12 +107,15 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         guard let searchText = searchController.searchBar.text else { return }
         self.dataCoordinator.currentSearchText = searchText
         dataCoordinator.reloadSearch()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
         self.dataCoordinator.delegate = self
+        parentTabController = (tabBarController as! PixaTabBarController)
+        favoritesCoordinator = parentTabController!.tabBarCoordinator.favesViewController.favoritesCoordinator
     }
 
     private func setupSearchController(){
@@ -110,4 +128,23 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         searchController.searchBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
+    
+    private func refreshFavoriteButtons(){
+        //make all buttons enabled at first
+        for case let cell as PixaCollectionViewCell in imageCollectionView.visibleCells {
+            cell.favoriteButton.isEnabled = true
+        }
+        //data coordinator loads favorited urls from core data
+        favoritesCoordinator!.loadURLs()
+        //for each cell, if its url can be found in data coordinators loaded array, disable its favorite button
+        for case let cell as PixaCollectionViewCell in imageCollectionView.visibleCells {
+            if(favoritesCoordinator!.isFavorited(urlstring: cell.urlString!)){
+                cell.favoriteButton.isEnabled = false
+                print("isfavorited")
+            }
+        }
+        delegate!.didUpdateFavorites()
+    }
+    
     }

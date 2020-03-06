@@ -14,12 +14,17 @@ class PixaCollectionViewCell : UICollectionViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     weak var delegate: PixaSaveButtonDelegate?
+    weak var delegate2: PixaFavoriteButtonDelegate?
+    var urlString: String?
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        delegate?.saveButtonTapped(self)
+        delegate!.saveButtonTapped(self)
     }
     
     
+    @IBAction func faveButtonTapped(_ sender: Any) {
+        delegate2!.favoriteButtonTapped(self)
+    }
     
 }
 
